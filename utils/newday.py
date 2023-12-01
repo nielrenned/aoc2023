@@ -1,8 +1,7 @@
 import sys
 import os
 
-template = """
-DAY = {day}
+template = """DAY = {day}
 RAW_INPUT = None
 INPUT = None
 
