@@ -13,6 +13,7 @@ In a lot of problems, code can be shared between Parts 1 and 2, but there's no w
 ## Thoughts
 
 - [Day 1](#day-1)
+- [Day 2](#day-2)
 
 ### Day 1
 
@@ -23,3 +24,9 @@ Part 1 was very straightforward: Add all the digits you find to a list, then use
 Part 2, however, was quite sneaky! I thought I had a clean solution using the regular expression `\d|one|two|...|nine` and then doing the same as part one. However, this fails in a couple specific cases. For example, consider a line that looks like `1kljtwone`. Using the regex from above, this line is valued at `12`, which is wrong. It should be `11`. This happens because `one` and `two` overlap. Instead, what we need to do is find all locations for *each* digit string, then sort the matches by their starting location. So we would have a match for `two` at index `4` and a match for `one` at index `6`. My solution uses a `namedtuple` for code readability and for quick sorting.
 
 This was a nice little twist, as usually Day 1 is nearly trivial.
+
+### Day 2
+
+[Problem Page](https://adventofcode.com/2023/day/2)
+
+This problem was more of an exercise in parsing, rather than an exercise in problem solving. I did get to use a couple nice Python constructs though. In Part 1, I took advantage of Python's [`for-else` statement](https://book.pythontips.com/en/latest/for_-_else.html) to add the game's `id` to the total only if we *didn't* break out of the loop. In Part 2, I used [list comprehensions](https://docs.python.org/3/tutorial/datastructures.html#list-comprehensions), a Python classic, to make determining the minimum number of cubes short-and-sweet.
