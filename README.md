@@ -14,6 +14,7 @@ In a lot of problems, code can be shared between Parts 1 and 2, but there's no w
 
 - [Day 1](#day-1)
 - [Day 2](#day-2)
+- [Day 3](#day-3)
 
 ### Day 1
 
@@ -30,3 +31,9 @@ This was a nice little twist, as usually Day 1 is nearly trivial.
 [Problem Page](https://adventofcode.com/2023/day/2)
 
 This problem was more of an exercise in parsing, rather than an exercise in problem solving. I did get to use a couple nice Python constructs though. In Part 1, I took advantage of Python's [`for-else` statement](https://book.pythontips.com/en/latest/for_-_else.html) to add the game's `id` to the total only if we *didn't* break out of the loop. In Part 2, I used [list comprehensions](https://docs.python.org/3/tutorial/datastructures.html#list-comprehensions), a Python classic, to make determining the minimum number of cubes short-and-sweet.
+
+### Day 3
+
+[Problem Page](https://adventofcode.com/2023/day/3)
+
+This one took me a few iterations to get right. I got stuck for quite a while on an off-by-one error when searching the file for numbers. There's probably a better way to do it. But once the parsing was figured out, solving the actual problem was relatively quick. I think the "trick" is to avoid counting numbers more than once, but we can use Python's `set` to make sure we don't count duplicates. Also, there were some pretty clean comprehensions that made the code short. Python is crazy.
