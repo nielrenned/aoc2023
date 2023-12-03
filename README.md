@@ -4,6 +4,8 @@ My solutions to and thoughts about the problems of [AoC2023](https://adventofcod
 
 WARNING: There *will* be spoilers below. Watch out!
 
+I'm going to document this here to make myself accountable for next year: I want to create my own programming language and use it to solve AoC2024.
+
 ## Code Structure
 
 I've given each file a template that includes empty methods for Part 1 and Part 2 of each problem, along with boilerplate code to load the raw input. The input for each problem is stored as the global `INPUT`.
