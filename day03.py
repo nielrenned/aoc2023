@@ -1,3 +1,5 @@
+import re
+
 from collections import namedtuple
 
 DAY = 3
@@ -24,19 +26,16 @@ def parse_input():
     numbers = []
     for y, line in enumerate(RAW_INPUT.split('\n')):
         if line == '': continue
-        digit_str = ''
-        # adding a period allows us to catch numbers at the end of the line
-        for x, c in enumerate(line + '.'):
-            if not (c.isdigit() or c == '.'):
-                parts.append(Part(c, (x,y)))
-            
-            if c.isdigit():
-                digit_str += c
-            elif digit_str != '':
-                value = int(digit_str)
-                positions = [(x-i-1, y) for i in range(len(digit_str))]
-                numbers.append(Number(value, frozenset(positions)))
-                digit_str = ''
+        
+        for match in re.finditer('\d+', line):
+            value = int(match.group())
+            span = frozenset((x,y) for x in range(match.start(), match.end()))
+            numbers.append(Number(value, span))
+        
+        for match in re.finditer('[^\d.]', line):
+            symbol = match.group()
+            location = (match.start(), y)
+            parts.append(Part(symbol, location))
     
     INPUT = (parts, numbers)
 
