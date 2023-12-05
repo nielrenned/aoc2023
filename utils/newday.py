@@ -17,8 +17,8 @@ def parse_input():
     global INPUT
     INPUT = []
     for line in RAW_INPUT.split('\\n'):
-        if line != '':
-            INPUT.append(line)
+        if line == '': continue
+        INPUT.append(line)
 
 def part1():
     pass
