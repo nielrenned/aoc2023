@@ -14,9 +14,13 @@ In a lot of problems, code can be shared between Parts 1 and 2, but there's no w
 
 ## Thoughts
 
-- [Day 1](#day-1)
-- [Day 2](#day-2)
-- [Day 3](#day-3)
+|S|M|T|W|T|F|S|
+|:-:|:-:|:-:|:-:|:-:|:-:|:-:|
+| | | | | | [1](#day-1) | [2](#day-2) |
+| [3](#day-3) | [4](#day-4) | 5 | 6 | 7 | 8 | 9 |
+| 10 | 11 | 12 | 13 | 14 | 15 | 16 |
+| 17 | 18 | 19 | 20 | 21 | 22 | 23 |
+| 24 | 25 | | | | | | 
 
 ### Day 1
 
@@ -39,3 +43,9 @@ This problem was more of an exercise in parsing, rather than an exercise in prob
 [Problem Page](https://adventofcode.com/2023/day/3)
 
 This one took me a few iterations to get right. I got stuck for quite a while on an off-by-one error when searching the file for numbers. There's probably a better way to do it. But once the parsing was figured out, solving the actual problem was relatively quick. I think the "trick" is to avoid counting numbers more than once, but we can use Python's `set` to make sure we don't count duplicates. Also, there were some pretty clean comprehensions that made the code short. Python is crazy.
+
+### Day 4
+
+[Problem Page](https://adventofcode.com/2023/day/4)
+
+Today felt like one of the easiest days so far. Using `sets` made Part 1 very simple, as we can simply get the length of the intersection. I expected Part 2 to have some sort of combinatorial explosion, but I think you can do it in a pretty naive way and still get the right answer. Not much else to say about Day 4.
