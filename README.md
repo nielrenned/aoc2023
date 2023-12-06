@@ -17,7 +17,7 @@ In a lot of problems, code can be shared between Parts 1 and 2, but there's no w
 |S|M|T|W|T|F|S|
 |:-:|:-:|:-:|:-:|:-:|:-:|:-:|
 | | | | | | [1](#day-1) | [2](#day-2) |
-| [3](#day-3) | [4](#day-4) | 5 | 6 | 7 | 8 | 9 |
+| [3](#day-3) | [4](#day-4) | [5](#day-5) | 6 | 7 | 8 | 9 |
 | 10 | 11 | 12 | 13 | 14 | 15 | 16 |
 | 17 | 18 | 19 | 20 | 21 | 22 | 23 |
 | 24 | 25 | | | | | | 
@@ -48,4 +48,20 @@ This one took me a few iterations to get right. I got stuck for quite a while on
 
 [Problem Page](https://adventofcode.com/2023/day/4)
 
-Today felt like one of the easiest days so far. Using `sets` made Part 1 very simple, as we can simply get the length of the intersection. I expected Part 2 to have some sort of combinatorial explosion, but I think you can do it in a pretty naive way and still get the right answer. Not much else to say about Day 4.
+Today felt like one of the easiest days so far. Using `set`s made Part 1 very simple, as we can simply get the length of the intersection. I expected Part 2 to have some sort of combinatorial explosion, but I think you can do it in a pretty naive way and still get the right answer. Not much else to say about Day 4.
+
+### Day 5
+
+[Problem Page](https://adventofcode.com/2023/day/5)
+
+Part 1 was relatively straightforward. We just need to trace the seed numbers through their paths. Part 2, however, required a little more cleverness. You can still, in theory, use the exact same method as Part 1. However, the numbers involved are pretty big, so this takes wayyy too long to calculate. However, we can note that the maps are essentially integer intervals being shifted around. Consider the first example:
+
+```
+seed-to-soil map:
+50 98 2
+52 50 48
+```
+
+This tells us that the interval $[98, 99]$ maps to $[50, 51]$, the interval $[50, 97]$ maps to $[52, 99]$, and every other interval maps to itself. Put another way: If $s\in[98,99]$, return $s - 48$; if $s\in[50,51]$, return $s + 2$; otherwise return $s$. We can take advantage of this to map entire intervals! (All intervals here are integer intervals). Suppose we're trying to map the interval $[45, 60]$ using the above map. Then we really have two pieces: $[45, 49]$ and $[50, 60]$. The former maps to itself, and the latter needs to be shifted up $2$, which gives the new set of intervals: $\{[45, 49], [52, 62] \}$. Instead of $15$ operations, we only did $4$. These savings get even more significant with the size of the intervals in the real data. Then we simply repeat the process for the next map with each of the new intervals until we're done.
+
+These interval calculations could have been done somewhat manually, but I decided to implement a class called `ClosedIntInterval` to make things a little easier. It implements addition of integers, subtraction of integers and other intervals, and intersection of intervals. That's all that's needed to perform the algorithm above! Some sort of interval-based math is an Advent of Code classic.
