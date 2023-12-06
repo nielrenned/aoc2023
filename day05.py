@@ -1,4 +1,5 @@
 import re
+from collections import namedtuple
 
 DAY = 5
 RAW_INPUT = None
@@ -44,8 +45,6 @@ def part1():
 
     input_type = 'seed'
     input_nums = seed_nums[:]
-
-    # debug_lines = [f'Seed {i}, ' for i in seed_nums]
     
     while input_type != 'location':
         output_type, map_data = maps[input_type]
@@ -58,27 +57,106 @@ def part1():
                     break
             else:
                 output_nums.append(input_num)
-        
-        # for i in range(len(debug_lines)):
-        #     debug_lines[i] += f'{output_type} {output_nums[i]}, '
 
         input_type = output_type
         input_nums = output_nums
     
-    # for line in debug_lines:
-    #     print(line)
-    
     return min(output_nums)
 
+class ClosedIntInterval:
+    def __init__(self, start, end):
+        self.start = start
+        self.end = end
+
+    def __repr__(self):
+        return f'[{self.start}..{self.end}]'
+
+    def __str__(self):
+        return self.__repr__()
+    
+    def __and__(self, other):
+        if not isinstance(other, ClosedIntInterval):
+            raise ValueError
+        
+        a, b = self.start, self.end
+        c, d = other.start, other.end
+
+        # Calculate [a, b] \cap [c, d]
+        if b < c or d < a:
+            return None
+        return ClosedIntInterval(max(a, c), min(b, d))
+    
+    def __add__(self, other):
+        if isinstance(other, int):
+            return ClosedIntInterval(self.start + other, self.end + other)
+        
+        raise TypeError(f'Cannot add {self.__class__.__name__} and {other.__class__.__name__}')
+    
+    def __sub__(self, other):
+        if isinstance(other, int):
+            return ClosedIntInterval(self.start - other, self.end - other)
+        
+        if isinstance(other, ClosedIntInterval):
+            a, b = self.start, self.end
+            c, d = other.start, other.end
+
+            # Calculate [a, b] - [c, d]
+            if b < c or d < a: # If [a, b] \cap [c, d] = \emptyset
+                return [self]
+            
+            remaining = []
+            if d < b: remaining.append(ClosedIntInterval(d+1, b))
+            if a < c: remaining.append(ClosedIntInterval(a, c-1))
+            return remaining
+        
+        raise TypeError(f'Cannot subtract {self.__class__.__name__} and {other.__class__.__name__}')
+
+def apply_shifts(input_intervals, shifts):
+    output_intervals = []
+    while len(input_intervals) != 0:
+        input_interval = input_intervals.pop()
+
+        for shift_interval, shift in shifts:
+            if overlap := shift_interval & input_interval:
+                output_intervals.append(overlap + shift)
+                input_intervals.extend(input_interval - overlap)
+                break
+        else:
+            # No overlap with shift intervals, so maps to self
+            output_intervals.append(input_interval)
+    
+    return output_intervals
 
 def part2():
-    pass
+    seed_nums, maps = INPUT
+
+    intervals = []
+    for i in range(0, len(seed_nums), 2):
+        start, length = seed_nums[i:i+2]
+        intervals.append(ClosedIntInterval(start, start+length-1))
+    
+    shift_maps = {}
+    for input_type, (output_type, map_data) in maps.items():
+        shifts = []
+        for output_start, input_start, length in map_data:
+            input_interval = ClosedIntInterval(input_start, input_start+length-1)
+            shift = output_start - input_start
+            shifts.append((input_interval, shift))
+        
+        shift_maps[input_type] = (output_type, shifts)
+    
+    current_type = 'seed'
+    while current_type != 'location':
+        current_type, shifts = shift_maps[current_type]
+        intervals = apply_shifts(intervals, shifts)
+    
+    return min(interval.start for interval in intervals)
 
 def main():
-    load_input()
+    load_input(True)
     parse_input()
     print('PART 1:', part1())
-    # print('PART 2:', part2())
+    print('PART 2:', part2())
 
 if __name__ == "__main__":
     main()
