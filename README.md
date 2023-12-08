@@ -17,7 +17,7 @@ In a lot of problems, code can be shared between Parts 1 and 2, but there's no w
 |S|M|T|W|T|F|S|
 |:-:|:-:|:-:|:-:|:-:|:-:|:-:|
 | | | | | | [1](#day-1) | [2](#day-2) |
-| [3](#day-3) | [4](#day-4) | [5](#day-5) | 6 | 7 | 8 | 9 |
+| [3](#day-3) | [4](#day-4) | [5](#day-5) | [6](#day-6) | 7 | 8 | 9 |
 | 10 | 11 | 12 | 13 | 14 | 15 | 16 |
 | 17 | 18 | 19 | 20 | 21 | 22 | 23 |
 | 24 | 25 | | | | | | 
@@ -65,3 +65,13 @@ seed-to-soil map:
 This tells us that the interval $[98, 99]$ maps to $[50, 51]$, the interval $[50, 97]$ maps to $[52, 99]$, and every other interval maps to itself. Put another way: If $s\in[98,99]$, return $s - 48$; if $s\in[50,51]$, return $s + 2$; otherwise return $s$. We can take advantage of this to map entire intervals! (All intervals here are integer intervals). Suppose we're trying to map the interval $[45, 60]$ using the above map. Then we really have two pieces: $[45, 49]$ and $[50, 60]$. The former maps to itself, and the latter needs to be shifted up $2$, which gives the new set of intervals: $\{[45, 49], [52, 62] \}$. Instead of $15$ operations, we only did $4$. These savings get even more significant with the size of the intervals in the real data. Then we simply repeat the process for the next map with each of the new intervals until we're done.
 
 These interval calculations could have been done somewhat manually, but I decided to implement a class called `ClosedIntInterval` to make things a little easier. It implements addition of integers, subtraction of integers and other intervals, and intersection of intervals. That's all that's needed to perform the algorithm above! Some sort of interval-based math is an Advent of Code classic.
+
+### Day 6
+
+[Problem Page](https://adventofcode.com/2023/day/6)
+
+Woah, a math problem! I think the idea here was to make you think you could do this just by iterating through the options and checking each one, and then pull the rug out from under you in Part 2. But since I'm math-oriented already, I went that direction first and got rewarded. 
+
+Consider the first example where $\text{time} = 7$ and $\text{distance} = 9$. Let $k$ be the number of milliseconds we hold down the button. Then the speed of the the boat is $k$ mm/ms and the remaining time is $7-k$ ms, so the distance the boat travels is $k(7-k)$ mm. So we want to know for what integer values of $k$ is $k(7-k)$ greater than $9$, i.e., we're solving the inequality $7k - k^2 > 9 \Leftrightarrow k^2 - 7k + 9 < 0$. The equation on the left-hand side can be visualized as a parabola opening upward. So if we solve $k^2 - 7k + 9 = 0$, this will give two values of $k$ (not necessarily integers) and then our answer will be all integer values *between* those, as that's the bit at the bottom of the parabola which will be under the $x$-axis (or really the $k$-axis in our case). Applying the quadratic formula, our two answers are approximately $1.697$ and $5.302$, which means choosing any $k\in\{2,3,4,5\}$ will ensure we beat the record. 
+
+We can apply this process generally and it quickly gives the answers in both parts. Nice! :)
