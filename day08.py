@@ -38,10 +38,8 @@ def gcd(a: int | Iterable[int], b: int = None):
 def lcm(a: int | Iterable[int], b: int = None):
     if b is not None:
         return a*b // gcd(a, b)
-    elif len(a) == 2:
-        return lcm(a[0], a[1])
     else:
-        return lcm(a[0], lcm(a[1:]))
+        return reduce(lcm, a)
 
 def part1():
     instrs, nodes = INPUT

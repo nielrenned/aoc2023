@@ -81,3 +81,11 @@ We can apply this process generally and it quickly gives the answers in both par
 [Problem Page](https://adventofcode.com/2023/day/7)
 
 Poker is another classic problem. Thankfully, this version, Camel Cards, is simplified enough that it's still interesting, but not as onerous as implementing real poker. And we can take advantage of some nice Pythonic tricks to make the code for today quite short. The main trick is converting each hand to a `tuple` where the first component is the rank of the hand, and the next five are the values of the cards, in order. Then, since `tuple`s implement comparison logic, we can sort the list of hands using the tuple as a key. The other smaller trick is the usual one: list comprehensions make life even easier. And I just recently learned about the `**` operator for dictionaries, so I threw that in as well. The only other note I have is that I expected the hand valuation in Part 2 to require some optimization, but even with just doing `str.replace`, it wasn't noticabely slower than Part 1.
+
+### Day 8
+
+[Problem Page](https://adventofcode.com/2023/day/8)
+
+Another math problem! Part 1 can be done the naive way: continuously apply the steps until you reach `ZZZ`. Unfortunately, Part 2 requires wayyyy too many steps to do that. However, we can make the following (correct) assumption to make our lives easier: each starting location reaches an ending location in a periodic fashion, i.e. the number of steps between reaching an ending location is always the same. Then, we  compute the number of steps for each starting location (using the same solution as Part 1), and take the *least common multiple*! This famously computes when cycles will synchronize.
+
+I decided to write some quick-and-dirty `gcd` and `lcm` functions for this problem. The [Euclidean algorithm](https://en.wikipedia.org/wiki/Euclidean_algorithm) never ceases to amaze me. And I got to use [`reduce`](https://docs.python.org/3/library/functools.html#functools.reduce)! Functional programming has some uses after all. :P
