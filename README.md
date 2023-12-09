@@ -17,7 +17,7 @@ In a lot of problems, code can be shared between Parts 1 and 2, but there's no w
 |S|M|T|W|T|F|S|
 |:-:|:-:|:-:|:-:|:-:|:-:|:-:|
 | | | | | | [1](#day-1) | [2](#day-2) |
-| [3](#day-3) | [4](#day-4) | [5](#day-5) | [6](#day-6) | [7](#day-7) | 8 | 9 |
+| [3](#day-3) | [4](#day-4) | [5](#day-5) | [6](#day-6) | [7](#day-7) | [8](#day-8) | [9](#day-9) |
 | 10 | 11 | 12 | 13 | 14 | 15 | 16 |
 | 17 | 18 | 19 | 20 | 21 | 22 | 23 |
 | 24 | 25 | | | | | | 
@@ -89,3 +89,20 @@ Poker is another classic problem. Thankfully, this version, Camel Cards, is simp
 Another math problem! Part 1 can be done the naive way: continuously apply the steps until you reach `ZZZ`. Unfortunately, Part 2 requires wayyyy too many steps to do that. However, we can make the following (correct) assumption to make our lives easier: each starting location reaches an ending location in a periodic fashion, i.e. the number of steps between reaching an ending location is always the same. Then, we  compute the number of steps for each starting location (using the same solution as Part 1), and take the *least common multiple*! This famously computes when cycles will synchronize.
 
 I decided to write some quick-and-dirty `gcd` and `lcm` functions for this problem. The [Euclidean algorithm](https://en.wikipedia.org/wiki/Euclidean_algorithm) never ceases to amaze me. And I got to use [`reduce`](https://docs.python.org/3/library/functools.html#functools.reduce)! Functional programming has some uses after all. :P
+
+### Day 9
+
+[Problem Page](https://adventofcode.com/2023/day/9)
+
+Even more math! Sort of. Today's problem screams recursion to me. We're repeatedly trying to predict the next term in a sequence, and we have a simple stopping case: when every term in the sequence is the same, we predict that pattern to continue. Otherwise, we calculate the sequence of deltas, and try to predict the next term in *that* sequence. The pseudocode is something like this:
+
+```
+function predict_next(seq: Sequence):
+  if seq == [n, n, ..., n] then return n
+  else
+    let deltas := the sequence of differences of seq
+    let next_delta := predict_next(deltas)
+    return (last element of seq) + next_delta
+```
+
+and since Python is almost pseudocode itself, the Python code looks basically the same. This accomplishes Part 1, and the cool thing is, Part 2 can use the same code by simply passing in the sequences in reverse! The code doesn't care if we're adding or subtracting, it just cares about the order. Done and dusted. This was the shortest day yet!
