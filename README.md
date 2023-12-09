@@ -17,7 +17,7 @@ In a lot of problems, code can be shared between Parts 1 and 2, but there's no w
 |S|M|T|W|T|F|S|
 |:-:|:-:|:-:|:-:|:-:|:-:|:-:|
 | | | | | | [1](#day-1) | [2](#day-2) |
-| [3](#day-3) | [4](#day-4) | [5](#day-5) | [6](#day-6) | 7 | 8 | 9 |
+| [3](#day-3) | [4](#day-4) | [5](#day-5) | [6](#day-6) | [7](#day-7) | 8 | 9 |
 | 10 | 11 | 12 | 13 | 14 | 15 | 16 |
 | 17 | 18 | 19 | 20 | 21 | 22 | 23 |
 | 24 | 25 | | | | | | 
@@ -75,3 +75,9 @@ Woah, a math problem! I think the idea here was to make you think you could do t
 Consider the first example where $\text{time} = 7$ and $\text{distance} = 9$. Let $k$ be the number of milliseconds we hold down the button. Then the speed of the the boat is $k$ mm/ms and the remaining time is $7-k$ ms, so the distance the boat travels is $k(7-k)$ mm. So we want to know for what integer values of $k$ is $k(7-k)$ greater than $9$, i.e., we're solving the inequality $7k - k^2 > 9 \Leftrightarrow k^2 - 7k + 9 < 0$. The equation on the left-hand side can be visualized as a parabola opening upward. So if we solve $k^2 - 7k + 9 = 0$, this will give two values of $k$ (not necessarily integers) and then our answer will be all integer values *between* those, as that's the bit at the bottom of the parabola which will be under the $x$-axis (or really the $k$-axis in our case). Applying the quadratic formula, our two answers are approximately $1.697$ and $5.302$, which means choosing any $k\in\{2,3,4,5\}$ will ensure we beat the record. 
 
 We can apply this process generally and it quickly gives the answers in both parts. Nice! :)
+
+### Day 7
+
+[Problem Page](https://adventofcode.com/2023/day/7)
+
+Poker is another classic problem. Thankfully, this version, Camel Cards, is simplified enough that it's still interesting, but not as onerous as implementing real poker. And we can take advantage of some nice Pythonic tricks to make the code for today quite short. The main trick is converting each hand to a `tuple` where the first component is the rank of the hand, and the next five are the values of the cards, in order. Then, since `tuple`s implement comparison logic, we can sort the list of hands using the tuple as a key. The other smaller trick is the usual one: list comprehensions make life even easier. And I just recently learned about the `**` operator for dictionaries, so I threw that in as well. The only other note I have is that I expected the hand valuation in Part 2 to require some optimization, but even with just doing `str.replace`, it wasn't noticabely slower than Part 1.
