@@ -4,7 +4,7 @@ My solutions to and thoughts about the problems of [AoC2023](https://adventofcod
 
 WARNING: There *will* be spoilers below. Watch out!
 
-I'm going to document this here to make myself accountable for next year: I want to create my own programming language and use it to solve AoC2024.
+I'm going to document this here to make myself accountable for next year: I want to create my own toy programming language and use it to solve AoC2024.
 
 ## Code Structure
 
@@ -18,7 +18,7 @@ In a lot of problems, code can be shared between Parts 1 and 2, but there's no w
 |:-:|:-:|:-:|:-:|:-:|:-:|:-:|
 | | | | | | [1](#day-1) | [2](#day-2) |
 | [3](#day-3) | [4](#day-4) | [5](#day-5) | [6](#day-6) | [7](#day-7) | [8](#day-8) | [9](#day-9) |
-| 10 | 11 | 12 | 13 | 14 | 15 | 16 |
+| [10](#day-10) | 11 | 12 | 13 | 14 | 15 | 16 |
 | 17 | 18 | 19 | 20 | 21 | 22 | 23 |
 | 24 | 25 | | | | | | 
 
@@ -106,3 +106,23 @@ function predict_next(seq: Sequence):
 ```
 
 and since Python is almost pseudocode itself, the Python code looks basically the same. This accomplishes Part 1, and the cool thing is, Part 2 can use the same code by simply passing in the sequences in reverse! The code doesn't care if we're adding or subtracting, it just cares about the order. Done and dusted. This was the shortest day yet!
+
+### Day 10
+
+[Problem Page](https://adventofcode.com/2023/day/10)
+
+Now *this* feels like an Advent of Code problem, rather than a math problem. A lot of Part 1 was setting up convenience structure to make the code more readable: I made a `Point` class and some helper methods to determine how things could flow. After that, it was really just a follow-the-arrows puzzle. 
+
+For Part 2, we actually needed some information from Part 1! That's a rarity, I feel like they can almost always be solved separately. Part 2 was much more challenging. We can use the [Jordan Curve Theorem](https://en.wikipedia.org/wiki/Jordan_curve_theorem#Application) to detect whether a point is inside or outside the path. (I decided to be somewhat suboptimal and always go north to get to the exterior, as it simplified the logic.)
+
+However, since our pipes are effectively width `1`, we have to be a little careful about how we count "intersections" with the main loop. Niavely, it would just be adding 1 every time we hit a pipe in the main loop. But consider the case outlined below, where we're trying to determine if `*` is inside or outside the loop by tracing east.
+
+```
+  F---7  F--7
+  | * L--J  L---7
+  L-------------J
+```
+
+When our tracing reaches the `L`, we know we're touching the main loop. But we can slide through by moving just a little bit south, and since the loop curves back up north later, we *didn't actually* cross the main loop. However, later down the line, we reach another `L`, but this time, the loop curves south, so this *is* a crossing. Once we account for this, the Jordan Curve Theorem logic works just fine.
+
+> Now that I'm done with this, I *really* need to get my Christmas shopping done. I'm cutting it close!
