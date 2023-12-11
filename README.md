@@ -18,7 +18,7 @@ In a lot of problems, code can be shared between Parts 1 and 2, but there's no w
 |:-:|:-:|:-:|:-:|:-:|:-:|:-:|
 | | | | | | [1](#day-1) | [2](#day-2) |
 | [3](#day-3) | [4](#day-4) | [5](#day-5) | [6](#day-6) | [7](#day-7) | [8](#day-8) | [9](#day-9) |
-| [10](#day-10) | 11 | 12 | 13 | 14 | 15 | 16 |
+| [10](#day-10) | [11](#day-11) | 12 | 13 | 14 | 15 | 16 |
 | 17 | 18 | 19 | 20 | 21 | 22 | 23 |
 | 24 | 25 | | | | | | 
 
@@ -126,3 +126,11 @@ However, since our pipes are effectively width `1`, we have to be a little caref
 When our tracing reaches the `L`, we know we're touching the main loop. But we can slide through by moving just a little bit south, and since the loop curves back up north later, we *didn't actually* cross the main loop. However, later down the line, we reach another `L`, but this time, the loop curves south, so this *is* a crossing. Once we account for this, the Jordan Curve Theorem logic works just fine.
 
 > Now that I'm done with this, I *really* need to get my Christmas shopping done. I'm cutting it close!
+
+### Day 11
+
+[Problem Page](https://adventofcode.com/2023/day/11)
+
+I don't actually have much to say about this problem. I think the way Part 1 is explained is supposed to push you toward actually expanding the array with a second empty row or a second empty column. But I was wary of that and also I knew we could solve the problem without doing that, so I implemented Part 1 to just account for any empty rows or columns on the path between the galaxies. This made Part 2 incredibly easy, as I just needed to change a constant, rather than re-implement my solution.
+
+I did do some cleanup after Part 2 though, since there was *heavy* code duplication. As it turns out, we don't need the actual map at all, just the locations of the galaxies and the empty rows and columns. I moved this computation to the `parse_input` step (which is not strictly accurate, but that's fine) and then both parts become quite short.
